@@ -1,0 +1,68 @@
+.text-decoration-none {
+    text-decoration: none;
+}
+
+.hover-effect {
+    padding: 25px 15px;
+    font-size: 14px;
+    color: #212529;
+    transition: color 0.3s ease, background-color 0.3s ease; 
+    cursor: pointer; 
+}
+.hover-effect:hover {
+    color: black;
+    background-color: #f0f0f0;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    display: inline-block;
+  }
+  
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+}
+  
+.image-section {
+    width: 100%;
+}
+
+.total-content{
+    position: absolute;
+    top: 40%;
+    z-index: 2;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    border-radius: inherit;
+}
+
+.circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: black; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 10px; 
+}
+
+
+
+
+  
