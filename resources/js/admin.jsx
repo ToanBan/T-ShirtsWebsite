@@ -8,6 +8,7 @@ import Dashboard from './admin/dashboard';
 import Danhmuc from './admin/Danhmuc';
 import Sanpham from './admin/Sanpham';
 import Taikhoan from './admin/Taikhoan';
+import Orders from './admin/Orders';
 export function Admin(){
     return (
         <BrowserRouter>
@@ -17,6 +18,7 @@ export function Admin(){
               <Route path="danhmuc" element = {<Danhmuc/>}/>
               <Route path="sanpham" element={<Sanpham/>}/>
               <Route path="taikhoan" element={<Taikhoan/>}/>
+              <Route path='orders' element={<Orders/>}></Route>
             </Route>
           </Routes>
         </BrowserRouter>

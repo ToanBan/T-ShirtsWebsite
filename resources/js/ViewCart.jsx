@@ -7,7 +7,7 @@ import Footer from './components/footer';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import BodyViewCart from './components/Cart/BodyViewCart';
 import CheckoutCart from './components/Cart/CheckoutCart';
-import OrderCompleted from './components/Cart/OrderCompleted';
+import BodySuccess from './components/Cart/BodySuccess';
 
 export function ViewCart() {
     return (
@@ -16,8 +16,9 @@ export function ViewCart() {
             <Router>
                 <Routes>
                     <Route path='/cart/view' element={<BodyViewCart />} />
-                    {/* <Route path='/checkoutcart' element={<CheckoutCart />} />
-                    <Route path='/ordercompleted' element={<OrderCompleted />} /> */}
+                    <Route path='/cart/checkout' element={<CheckoutCart />} />
+                    <Route path='/success' element={<BodySuccess/>}></Route>
+                    
                 </Routes>
             </Router>
             <Footer />

@@ -52,6 +52,15 @@ export default function MainAdmin() {
                             Quản Lý Tài Khoản
                         </NavLink>
 
+                        <NavLink 
+                            to="orders" 
+                            className={({ isActive }) => 
+                                "nav-link mt-5 " + (isActive ? "text-primary" : "text-dark")
+                            }
+                        >
+                            Quản Lý Đơn Hàng
+                        </NavLink>
+
                         <a 
                             href="/" 
                             className="btn btn-danger mt-5"   

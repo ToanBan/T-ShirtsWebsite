@@ -15,9 +15,9 @@ class CheckOrderSuccess
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!session()->has('order_successful')){
+        if (!session()->has('success_order') || session('success_order') !== true) {
             return redirect()->route('cart-view');
-        }
+        }        
         return $next($request);
     }
 }

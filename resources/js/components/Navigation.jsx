@@ -120,6 +120,10 @@ function Navigation() {
                                         <li>
                                             <button onClick={handleLogout} className="dropdown-item" style={{ fontSize: '15px' }}>Logout</button>
                                         </li>
+
+                                        <li>
+                                            <a style={{ fontSize: '15px' }} href="/myinvoices" className="dropdown-item">My Invoices</a>
+                                        </li>
                                     </ul>
                                 </li>
                             ) : (

@@ -5,15 +5,16 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartItemController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\CheckOutVerifyController;
+use App\Http\Controllers\VerifyOrdersController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('index');
 });
 
 Auth::routes();
-
 
 
 Route::get('/auth/check', function(){
@@ -94,14 +95,34 @@ Route::get('/cart/view', [CartItemController::class, 'viewCart'])->name('cart-vi
 
 Route::delete('/cart/{id}', [CartItemController::class, 'RemoveItem']);
 
-Route::post('/cart/order', [OrderController::class, 'store']);
 
-Route::get('/cart/order', [OrderController::class, 'show']);
+Route::get('/cart/checkout', function(){
+    return view('cartview');
+});
 
-Route::delete('/cart/order/{id}', [OrderController::class, 'destroy']);
+Route::post('/cart/checkout', [CheckOutVerifyController::class, 'store']);
 
-Route::post('/session', [StripeController::class, 'session'])->name('session');
+Route::post('/cart/order', [StripeController::class, 'session']);
 
-Route::get('/success', [StripeController::class, 'success'])->name('success')->middleware('checkOrderSuccess');
+Route::get('/success', [StripeController::class, 'success'])->name('success');
 
 
+Route::get('/verifyorders', [VerifyOrdersController::class, 'index']);
+
+Route::put('/verifyorders/{id}', [VerifyOrdersController::class, 'update']);
+
+Route::get('/email/send', function(){
+    return view('mail.verify');
+});
+
+Route::post('/orders/{id}/update-location', [VerifyOrdersController::class, 'updateLocation']);
+Route::get('/invoiceforuser', [VerifyOrdersController::class, 'invoiceforuser']);
+
+
+Route::get('/calculate-month', [StripeController::class, 'calculatedMonth']);
+
+Route::get('/myinvoices', function(){
+    return view('pages.myinvoices');
+});
+
+Route::post('/detailorder/{id}', [VerifyOrdersController::class, 'show']);

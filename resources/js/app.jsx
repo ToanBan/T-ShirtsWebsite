@@ -7,7 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import ContentArea from './components/ContentArea';
 import Footer from './components/footer';
-
 export function App(){
     return(
         <>

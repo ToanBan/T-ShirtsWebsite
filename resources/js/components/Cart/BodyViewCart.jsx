@@ -3,10 +3,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import BtnGroup from "../BtnGroup";
 import { Outlet, Link } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 export default function BodyViewCart() {
     const imgPath = "http://127.0.0.1:8000/storage/temp_images";
     const [cartItems, setCartItems] = useState([]);
+    const [dataOrder, setDataOrder] = useState([]);
+    const navigate = useNavigate();
+    const ChooseDataOrder = (item) => {
+        setDataOrder((prev) => {
+            return [...prev, item];
+        })
+    }
 
     const fetchCaritem = () => {
         fetch('/cart')
@@ -63,6 +70,10 @@ export default function BodyViewCart() {
         }
     }
 
+    const VerifyAddress = () => {
+        navigate('/cart/checkout', {state:{dataOrder}})
+    }
+
     const handleCheckboxChange = (productId) => {
         setCartItems(prevProducts => 
             prevProducts.map(item => 
@@ -71,45 +82,7 @@ export default function BodyViewCart() {
         );
     }
 
-    const handleOrder = (e) => {
-        e.preventDefault();
-        const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
-        
-        const selectedItems = cartItems.filter(item => item.selected).map(item => ({
-            id: item.id,
-            quantity: item.quantity,
-            
-        }));
-
-        if (selectedItems.length === 0) {
-            alert("Vui lòng chọn ít nhất một sản phẩm để đặt hàng.");
-            return;
-        }
-
-        fetch('/session', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrfTokenMeta.content,
-                'Accept': 'application/json' // Thêm dòng này để yêu cầu JSON response
-            },
-            body: JSON.stringify({ items: selectedItems })
-        })
-        .then(response => {
-            if (!response.ok) {
-                // Kiểm tra nếu phản hồi không phải là JSON
-                return response.text().then(text => { 
-                    throw new Error(`Lỗi khi đặt hàng: ${text}`); 
-                });
-            }
-            return response.json();
-        })
-        .then(data => {
-            window.location.href = data.url;
-        })
-        .catch(err => console.error('Lỗi đặt hàng:', err.message));
-        
-    }
+    console.log(dataOrder);
 
     const totalPrice = cartItems.reduce((total, item) => {
         return item.selected ? total + (item.product.product_price * item.quantity) : total;
@@ -118,22 +91,7 @@ export default function BodyViewCart() {
     return (
         <div className="container mt-5">
             <h1 className="fw-100">Cart</h1>
-            {/* <div className="process d-flex justify-content-center">
-                <Link to='/cart/view' className="d-flex me-4 align-items-center justify-content-center text-decoration-none"> 
-                    <div className="circle text-white">1</div>
-                    <div className="text-dark">SHOPPING CART</div>
-                </Link>
-                <FontAwesomeIcon icon={faChevronRight} className="align-self-center" />
-                <Link to='/checkoutcart' className="d-flex ms-4 me-4 align-items-center justify-content-center text-decoration-none"> 
-                    <div className="circle text-white">2</div>
-                    <div className="text-dark">CHECKOUT</div>
-                </Link>
-                <FontAwesomeIcon icon={faChevronRight} className="align-self-center" />
-                <Link to='/ordercompleted' className="d-flex ms-4 me-4 align-items-center justify-content-center text-decoration-none"> 
-                    <div className="circle text-white">3</div>
-                    <div className="text-dark">ORDER COMPLETE</div>
-                </Link>
-            </div> */}
+          
 
             <table className="table mt-5">
                 <thead>
@@ -168,6 +126,7 @@ export default function BodyViewCart() {
                                     type="checkbox" 
                                     checked={item.selected || false}
                                     onChange={() => handleCheckboxChange(item.id)} 
+                                    onClick={()=>ChooseDataOrder(item)}
                                 />
                             </td>
                             <td>
@@ -181,7 +140,7 @@ export default function BodyViewCart() {
             <div className="row mt-5">
                 <div className="col d-flex justify-content-end align-items-center">
                     <strong className="fs-200fw-semibold me-3">Tổng Giá Tiền Sản Phẩm: {totalPrice} VND</strong>
-                    <button className="btn btn-primary" onClick={handleOrder}>Mua Hàng</button> {/* Gọi hàm handleOrder */}
+                    <button className="btn btn-primary" onClick={VerifyAddress}>Mua Hàng</button> 
                 </div>
             </div>
         </div>

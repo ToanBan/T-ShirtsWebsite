@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from 'react-router-dom';
 export default function BodySuccess(){
     return (
         <>
@@ -16,7 +16,9 @@ export default function BodySuccess(){
                             <p style={{color:"#77838F"}}>Thank you for your order! <br />
                             Your order is being processed and will be completed within 3-6 hours. <br />
                             You will receive an email confirmation when your order is completed.</p>
-                            <a href="/" className="btn btn-primary rounded mt-3">Continue Shopping</a>
+                            
+                                <a href="/" className="btn btn-primary rounded mt-3">Continue Shopping</a>
+                                
                         </div>
                     </div>
                 </div>
